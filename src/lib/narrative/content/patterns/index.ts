@@ -9,17 +9,27 @@ import { antenna } from './antenna';
 import { fugitive } from './fugitive';
 import { exhausted } from './exhausted';
 
-const patternContentMap: Record<string, PatternContent> = {
-	sentinel,
-	perfectionist,
-	manager,
-	ruminator,
-	volcano,
-	savior,
-	antenna,
-	fugitive,
-	exhausted
+import { sentinel as sentinel_ro } from '../../content-ro/patterns/sentinel';
+import { perfectionist as perfectionist_ro } from '../../content-ro/patterns/perfectionist';
+import { manager as manager_ro } from '../../content-ro/patterns/manager';
+import { ruminator as ruminator_ro } from '../../content-ro/patterns/ruminator';
+import { volcano as volcano_ro } from '../../content-ro/patterns/volcano';
+import { savior as savior_ro } from '../../content-ro/patterns/savior';
+import { antenna as antenna_ro } from '../../content-ro/patterns/antenna';
+import { fugitive as fugitive_ro } from '../../content-ro/patterns/fugitive';
+import { exhausted as exhausted_ro } from '../../content-ro/patterns/exhausted';
+
+const en: Record<string, PatternContent> = {
+	sentinel, perfectionist, manager, ruminator, volcano, savior, antenna, fugitive, exhausted
 };
+
+const ro: Record<string, PatternContent> = {
+	sentinel: sentinel_ro, perfectionist: perfectionist_ro, manager: manager_ro,
+	ruminator: ruminator_ro, volcano: volcano_ro, savior: savior_ro,
+	antenna: antenna_ro, fugitive: fugitive_ro, exhausted: exhausted_ro
+};
+
+const localeMap: Record<string, Record<string, PatternContent>> = { en, ro };
 
 const fallback: PatternContent = {
 	whereYouAre: {
@@ -39,6 +49,7 @@ const fallback: PatternContent = {
 	}
 };
 
-export function loadPatternContent(patternId: string): PatternContent {
-	return patternContentMap[patternId] ?? fallback;
+export function loadPatternContent(patternId: string, locale = 'en'): PatternContent {
+	const map = localeMap[locale] ?? localeMap['en'];
+	return map[patternId] ?? localeMap['en'][patternId] ?? fallback;
 }

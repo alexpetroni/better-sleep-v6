@@ -656,5 +656,21 @@
 			"sleep_away_from_home.worse": "Worse — unfamiliar places make it harder",
 			"sleep_away_from_home.same": "About the same"
 		}
+	},
+	"Back": "Back",
+	"Next": "Next",
+	"Submit": "Submit",
+	"ui": {
+		"app_title": "Better Sleep Assessment",
+		"app_subtitle": "A comprehensive sleep health evaluation — 6 steps",
+		"error_title": "Something went wrong",
+		"start_over": "Start Over",
+		"go_home": "Go back home",
+		"section_where": "Where you are right now",
+		"section_loop": "What's feeding the loop",
+		"section_suggest": "What I'd suggest, and the order matters",
+		"section_honest": "The honest version",
+		"primary_pattern": "Primary pattern",
+		"language": "Language"
 	}
 }

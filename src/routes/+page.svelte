@@ -2,8 +2,27 @@
 	import { MultiStepForm } from 'formcomp';
 	import type { FormCallbacks } from 'formcomp';
 	import { formConfig } from '$lib/data/config';
+	import type { FormConfig } from 'formcomp';
 	import { translate } from '$lib/translate';
 	import { locale } from '$lib/stores/locale.svelte';
+
+	// Resolve placeholder i18n keys in the config since formcomp doesn't translate them
+	function resolveConfig(config: FormConfig): FormConfig {
+		return {
+			steps: config.steps.map((step) => ({
+				...step,
+				groups: step.groups.map((group) => ({
+					...group,
+					questions: group.questions.map((q) => ({
+						...q,
+						placeholder: q.placeholder ? translate(q.placeholder) : undefined
+					}))
+				}))
+			}))
+		};
+	}
+
+	const resolvedConfig = $derived(resolveConfig(formConfig));
 	import { scoreAssessment } from '$lib/scoring/index';
 	import { generateNarrative, type NarrativeResult } from '$lib/narrative/index';
 
@@ -160,7 +179,7 @@
 			</article>
 		{:else}
 			{#key formKey}
-				<MultiStepForm config={formConfig} {translate} {callbacks} />
+				<MultiStepForm config={resolvedConfig} {translate} {callbacks} />
 			{/key}
 		{/if}
 	</div>
